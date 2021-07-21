@@ -67,7 +67,7 @@ public class MainTest {
         LoginTest loginTest = new LoginTest(instance);
         boolean result = loginTest.loginTest(wronglogin, password);
         if (result) {
-            //log.error("testloginNegative1 is negative expected value is FALSE . actual is = %s", result);
+            log.error("testloginNegative1 is negative expected value is FALSE . actual is = %s", result);
             System.out.println("Login-wrong,PW-OK - FAILED");
         }
         assertFalse(result);
@@ -79,7 +79,7 @@ public class MainTest {
         LoginTest loginTest = new LoginTest(instance);
         boolean result = loginTest.loginTest(wronglogin, wrongpassword);
         if (result) {
-            // log.error("testloginNegative2 is negative expected value is FALSE . actual is = %s", result);
+            log.error("testloginNegative2 is negative expected value is FALSE . actual is = %s", result);
             System.out.println("Login-wrong,PW-wrong - FAILED");
         }
         assertFalse(result);
@@ -92,7 +92,7 @@ public class MainTest {
         LoginTest loginTest = new LoginTest(instance);
         boolean result = loginTest.loginTest(login, wrongpassword);
         if (result) {
-            //log.error("testloginNegative3 is negative expected value is FALSE . actual is = %s", result);
+            log.error("testloginNegative3 is negative expected value is FALSE . actual is = %s", result);
             System.out.println("Login-OK,PW-wrong - FAILED");
         }
         assertFalse(result);
@@ -104,7 +104,7 @@ public class MainTest {
         LoginTest loginTest = new LoginTest(instance);
         boolean result = loginTest.loginTest(login, emptypassword);
         if (result) {
-            //log.error("testloginNegative4 is negative expected value is FALSE . actual is = %s", result);
+            log.error("testloginNegative4 is negative expected value is FALSE . actual is = %s", result);
             System.out.println("Login-OK,PW-empty- FAILED");
         }
         assertFalse(result);
@@ -116,7 +116,7 @@ public class MainTest {
         LoginTest loginTest = new LoginTest(instance);
         boolean result = loginTest.loginTest(emptylogin, password);
         if (result) {
-            //log.error("testloginNegative5 is negative expected value is FALSE . actual is = %s", result);
+            log.error("testloginNegative5 is negative expected value is FALSE . actual is = %s", result);
             System.out.println("Login-empty,PW-OK - FAILED");
         }
         assertFalse(result);
@@ -128,7 +128,7 @@ public class MainTest {
         LoginTest loginTest = new LoginTest(instance);
         boolean result = loginTest.loginTest(emptylogin, emptypassword);
         if (result) {
-            // log.error("testloginNegative6 is negative expected value is FALSE . actual is = %s", result);
+            log.error("testloginNegative6 is negative expected value is FALSE . actual is = %s", result);
             System.out.println("Login-empty,PW-empty - FAILED");
         }
         assertFalse(result);
