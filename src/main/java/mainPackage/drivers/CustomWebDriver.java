@@ -1,4 +1,4 @@
-package mainPackage;
+package mainPackage.drivers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;

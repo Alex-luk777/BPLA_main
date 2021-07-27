@@ -1,22 +1,17 @@
 package mainPackage;
 
 import lombok.extern.slf4j.Slf4j;
+import mainPackage.drivers.CustomWebDriver;
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 public class MainTest {
@@ -29,10 +24,10 @@ public class MainTest {
     private final String emptypassword = "";
     private final String urlPrefix = "https://bpla.mpsdevelopment.com";
     private final String urlStart = "https://bpla.mpsdevelopment.com/start";
+    //private final String urlSignedUp="https://bpla.mpsdevelopment.com/sign-in";
 
 
     private WebDriver instance = CustomWebDriver.getInstance();
-
 
   /*  {
         instance.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
@@ -55,7 +50,7 @@ public class MainTest {
         LoginTest loginTest = new LoginTest(instance);
         boolean result = loginTest.loginTest(login, password);
         if (!result) {
-            //log.error("testloginNegative1 is negative expected value is FALSE . actual is = %s", result);
+            log.error("testloginNegative1 is negative expected value is FALSE . actual is = %s", result);
             System.out.println("Login-OK,PW-OK - FAILED");
         }
         assertTrue(result);
@@ -146,7 +141,10 @@ public class MainTest {
     public void testSignUp() throws Exception {
         instance.get(urlStart);
         WebElement href = instance.findElement(By.id("signUp"));
-        assertTrue((href.isDisplayed()));
+        href.click();
+        //System.out.println(SignUp.signUpOk());
+        assertTrue(new SignUp(instance).signUpOk());
+
 
     }
 
