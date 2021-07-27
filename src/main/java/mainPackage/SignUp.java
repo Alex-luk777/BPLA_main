@@ -12,8 +12,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.time.Duration;
+import java.util.Random;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class SignUp {
+
+    public final String pushNotificationDivId = "toast-container";
 
     public final String tempMailUrl = "https://temp-mail.org/en/?__cf_chl_jschl_tk__=pmd_5e683695b38b33a9119627ea12d4357c10f97660-1626940660-0-gqNtZGzNAg2jcnBszQti";
 
@@ -30,7 +36,7 @@ public class SignUp {
     private final String confirmpasswordFieldXpath = "/html/body/app-root/app-content-layout/div/div/div/div/div[2]/app-sign-up/div/div[1]/app-content-container/div/div/form/app-form-control[10]/div/div/input";
     private final String iagreeboxFieldXpath = "/html/body/app-root/app-content-layout/div/div/div/div/div[2]/app-sign-up/div/div[1]/app-content-container/div/div/form/app-form-control[11]/div/div/div[2]/label";
     private final String submitFieldXpath = "/html/body/app-root/app-content-layout/div/div/div/div/div[2]/app-sign-up/div/div[1]/app-content-container/div/div/form/button";
-    private final String urlSignedUp="https://bpla.mpsdevelopment.com/sign-in";
+    private final String urlSignedUp = "https://bpla.mpsdevelopment.com/sign-in";
 
     @BeforeClass
     public void initPropsWebDriver() {
@@ -46,7 +52,7 @@ public class SignUp {
     }
 
     public String getTempMailUrl() {
-        driverTempMail= new ChromeDriver();
+        driverTempMail = new ChromeDriver();
         driverTempMail.get(tempMailUrl);
         tempMail = driverTempMail.findElement(By.id("mail")).getText();
         System.out.println(tempMail);
@@ -56,25 +62,43 @@ public class SignUp {
 
     public boolean signUpOk() throws InterruptedException {
         System.out.println("inside");
-        WebElement xpath=driver.findElement(By.xpath(loginFieldXpath));
+        WebElement xpath = driver.findElement(By.xpath(loginFieldXpath));
         xpath.clear();
-        xpath.sendKeys("lilipyt22342335426788@gmeil.com");
+        xpath.sendKeys("li"+ new Random().nextInt() + "@gmeil.com");
         driver.findElement(By.xpath(nameFieldXpath)).sendKeys("New user");
         driver.findElement(By.xpath(surnameFieldXpath)).sendKeys("surname");
         driver.findElement(By.xpath(telFieldXpath)).sendKeys("0671231212");
         driver.findElement(By.xpath(birthdayFieldXpath)).clear();
-        driver.findElement(By.xpath(birthdayFieldXpath)).sendKeys("01"+"."+"01"+"."+"9");
+        driver.findElement(By.xpath(birthdayFieldXpath)).sendKeys("01" + "." + "01" + "." + "9");
         driver.findElement(By.xpath(passwordFieldXpath)).sendKeys("11111111");
         driver.findElement(By.xpath(confirmpasswordFieldXpath)).sendKeys("11111111");
         driver.findElement(By.xpath(iagreeboxFieldXpath)).click();
         driver.findElement(By.xpath(submitFieldXpath)).click();
 
-        System.out.println(driver.getCurrentUrl());
-        Thread.sleep(5000);
-        if (driver.getCurrentUrl()==(urlSignedUp)){
-           return (true);
+        int countTime = 0;
+        boolean result = false;
+        while (countTime < 10) {
+
+            try{
+                WebElement element = driver.findElement(By.id(pushNotificationDivId));
+               // element.isDisplayed();
+                if (!element.isDisplayed()){
+                    Thread.sleep(20);
+
+                    result = false;
+                } else {
+                    result = true;
+                    break;
+                }
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            countTime++;
         }
-        else {return (false);}
+
+        assertTrue(result);
+        return result;
 
     }
 
