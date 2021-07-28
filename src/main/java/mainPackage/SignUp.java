@@ -45,10 +45,6 @@ public class SignUp {
         driverTempMail.manage().timeouts().implicitlyWait(Duration.ofMillis(5000));
     }
 
-    /*public void webInit(WebDriver driverTempMail, WebDriver driver) {
-        this.driverTempMail = driverTempMail;
-        //this.driver = driver;
-    }*/
     public SignUp(WebDriver driver) {
         this.driver = driver;
     }
@@ -81,27 +77,6 @@ public class SignUp {
 
 
         boolean result = false;
-       /* int countTime = 0;
-        while (countTime < 10) {
-
-            try{
-                WebElement element = driver.findElement(By.id(pushNotificationDivId));
-               // element.isDisplayed();
-                if (!element.isDisplayed()){
-                    Thread.sleep(20);
-
-                    result = false;
-                } else {
-                    result = true;
-                    break;
-                }
-
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-            countTime++;
-        }*/
-
         WebElement element = (new WebDriverWait(driver, Duration.ofSeconds(3)))
                 .until(ExpectedConditions.presenceOfElementLocated(By.id(pushNotificationDivId)));
 
