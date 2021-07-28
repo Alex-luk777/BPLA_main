@@ -10,6 +10,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.Random;
@@ -64,7 +66,9 @@ public class SignUp {
         System.out.println("inside");
         WebElement xpath = driver.findElement(By.xpath(loginFieldXpath));
         xpath.clear();
-        xpath.sendKeys("li"+ new Random().nextInt() + "@gmeil.com");
+        String login="li" + new Random().nextInt() + "@gmeil.com";
+        System.out.println(login);
+        xpath.sendKeys(login);
         driver.findElement(By.xpath(nameFieldXpath)).sendKeys("New user");
         driver.findElement(By.xpath(surnameFieldXpath)).sendKeys("surname");
         driver.findElement(By.xpath(telFieldXpath)).sendKeys("0671231212");
@@ -75,8 +79,9 @@ public class SignUp {
         driver.findElement(By.xpath(iagreeboxFieldXpath)).click();
         driver.findElement(By.xpath(submitFieldXpath)).click();
 
-        int countTime = 0;
+
         boolean result = false;
+       /* int countTime = 0;
         while (countTime < 10) {
 
             try{
@@ -95,16 +100,23 @@ public class SignUp {
                 System.out.println(e.getMessage());
             }
             countTime++;
-        }
+        }*/
 
+        WebElement element = (new WebDriverWait(driver, Duration.ofSeconds(3)))
+                .until(ExpectedConditions.presenceOfElementLocated(By.id(pushNotificationDivId)));
+
+        if (!element.isDisplayed()) {
+            result = false;
+        } else {
+            result = true;
+
+        }
         assertTrue(result);
         return result;
-
     }
 
-
     @AfterClass
-    public void closeBrowser() {
+    public void close11Browser() {
         driverTempMail.close();
     }
 
