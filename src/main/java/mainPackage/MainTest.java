@@ -23,7 +23,8 @@ public class MainTest {
     private final String emptylogin = "";
     private final String emptypassword = "";
     private final String urlPrefix = "https://bpla.mpsdevelopment.com";
-    private final String urlStart = "https://bpla.mpsdevelopment.com/start";
+    private final String urlStart = (urlPrefix+"/start");
+    private final String urlSignUp=(urlPrefix+"/sign-up");
     //private final String urlSignedUp="https://bpla.mpsdevelopment.com/sign-in";
 
 
@@ -134,7 +135,6 @@ public class MainTest {
         instance.get(urlStart);
         WebElement href = instance.findElement(By.id("signIn"));
         assertTrue((href.isDisplayed()));
-
     }
 
     @Test
@@ -142,11 +142,30 @@ public class MainTest {
         instance.get(urlStart);
         WebElement href = instance.findElement(By.id("signUp"));
         href.click();
-        //System.out.println(SignUp.signUpOk());
         assertTrue(new SignUp(instance).signUpOk());
+    }
 
+    @Test
+    public void testSignUpSignIn() throws Exception {
+        instance.get(urlSignUp);
+        WebElement href1 = instance.findElement(By.id("signIn"));
+        assertTrue((href1.isDisplayed()));
 
     }
+    @Test
+    public void testSignUpPublicInfo() throws Exception {
+        instance.get(urlSignUp);
+        WebElement href1 = instance.findElement(By.id("publicInfo"));
+        assertTrue((href1.isDisplayed()));
+
+    }
+    @Test
+    public void testSignUpContacts() throws Exception {
+        instance.get(urlSignUp);
+        WebElement href1 = instance.findElement(By.id("contacts"));
+        assertTrue((href1.isDisplayed()));
+    }
+
 
     @Test
     public void testSystemPreview() throws Exception {
