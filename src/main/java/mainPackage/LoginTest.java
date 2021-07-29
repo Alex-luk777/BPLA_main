@@ -9,8 +9,6 @@ import java.util.concurrent.TimeUnit;
 
 public class LoginTest {
 
-    private final String mainUrl = "https://bpla.mpsdevelopment.com/sign-in";
-
     private final String xpathButtonSignIn = "/html/body/app-root/app-content-layout/div/div/div/div/div[2]/app-sign-in/div/div[1]/app-content-container/div/div/form/button";
 
     private final String xpathForButtonSubmit = "/html/body/app-root/app-content-layout/div/div/div/div/div[2]/app-sign-in/div/div[1]/app-content-container/div/div/form/button";
@@ -30,7 +28,7 @@ public class LoginTest {
     }
 
 
-    public boolean loginTest(String login, String password) throws Exception {
+    public boolean loginTest(String login, String password, String mainUrl) throws Exception {
 
         this.driver.get(mainUrl);
         WebElement webElement;

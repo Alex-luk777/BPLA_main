@@ -23,9 +23,10 @@ public class MainTest {
     private final String wrongpassword = "m90dfsdf253tsdxghdthgfspsdfdsg2342dfs";
     private final String emptylogin = "";
     private final String emptypassword = "";
-    private final String urlPrefix = "https://bpla.mpsdevelopment.com";
+    public final String urlPrefix = "https://bpla.mpsdevelopment.com";
     private final String urlStart = (urlPrefix+"/start");
-    private final String urlSignUp=(urlPrefix+"/sign-up");
+    private final String urlSignUp = (urlPrefix+"/sign-up");
+    private final String urlSignIn = (urlPrefix+"/sign-in");
     private final String newLogin="li" + new Random().nextInt() + "@gmeil.com";
     private final String name="New user";
     private final String surname="surname";
@@ -57,7 +58,7 @@ public class MainTest {
     //Login - OK, PW - OK
     public void testloginPositive() throws Exception {
         LoginTest loginTest = new LoginTest(instance);
-        boolean result = loginTest.loginTest(login, password);
+        boolean result = loginTest.loginTest(login, password, urlSignIn);
         if (!result) {
             log.error("testloginNegative1 is negative expected value is FALSE . actual is = %s", result);
             System.out.println("Login-OK,PW-OK - FAILED");
@@ -69,7 +70,7 @@ public class MainTest {
     //Login - wrong, PW - OK
     public void testloginNegative1() throws Exception {
         LoginTest loginTest = new LoginTest(instance);
-        boolean result = loginTest.loginTest(wronglogin, password);
+        boolean result = loginTest.loginTest(wronglogin, password, urlSignIn);
         if (result) {
             log.error("testloginNegative1 is negative expected value is FALSE . actual is = %s", result);
             System.out.println("Login-wrong,PW-OK - FAILED");
@@ -81,7 +82,7 @@ public class MainTest {
     //Login - wrong, PW - wrong
     public void testloginNegative2() throws Exception {
         LoginTest loginTest = new LoginTest(instance);
-        boolean result = loginTest.loginTest(wronglogin, wrongpassword);
+        boolean result = loginTest.loginTest(wronglogin, wrongpassword, urlSignIn);
         if (result) {
             log.error("testloginNegative2 is negative expected value is FALSE . actual is = %s", result);
             System.out.println("Login-wrong,PW-wrong - FAILED");
@@ -94,7 +95,7 @@ public class MainTest {
     //Login - OK, PW - wrong
     public void testloginNegative3() throws Exception {
         LoginTest loginTest = new LoginTest(instance);
-        boolean result = loginTest.loginTest(login, wrongpassword);
+        boolean result = loginTest.loginTest(login, wrongpassword, urlSignIn);
         if (result) {
             log.error("testloginNegative3 is negative expected value is FALSE . actual is = %s", result);
             System.out.println("Login-OK,PW-wrong - FAILED");
@@ -106,7 +107,7 @@ public class MainTest {
     //Login - OK, PW - empty
     public void testloginNegative4() throws Exception {
         LoginTest loginTest = new LoginTest(instance);
-        boolean result = loginTest.loginTest(login, emptypassword);
+        boolean result = loginTest.loginTest(login, emptypassword, urlSignIn);
         if (result) {
             log.error("testloginNegative4 is negative expected value is FALSE . actual is = %s", result);
             System.out.println("Login-OK,PW-empty- FAILED");
@@ -118,7 +119,7 @@ public class MainTest {
     //Login - empty, PW - OK
     public void testloginNegative5() throws Exception {
         LoginTest loginTest = new LoginTest(instance);
-        boolean result = loginTest.loginTest(emptylogin, password);
+        boolean result = loginTest.loginTest(emptylogin, password, urlSignIn);
         if (result) {
             log.error("testloginNegative5 is negative expected value is FALSE . actual is = %s", result);
             System.out.println("Login-empty,PW-OK - FAILED");
@@ -130,7 +131,7 @@ public class MainTest {
     //Login - empty, PW - empty
     public void testloginNegative6() throws Exception {
         LoginTest loginTest = new LoginTest(instance);
-        boolean result = loginTest.loginTest(emptylogin, emptypassword);
+        boolean result = loginTest.loginTest(emptylogin, emptypassword, urlSignIn);
         if (result) {
             log.error("testloginNegative6 is negative expected value is FALSE . actual is = %s", result);
             System.out.println("Login-empty,PW-empty - FAILED");
