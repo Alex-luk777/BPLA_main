@@ -1,5 +1,6 @@
 package mainPackage;
 
+import cucumber.api.java.en.Given;
 import lombok.extern.slf4j.Slf4j;
 import mainPackage.drivers.CustomWebDriver;
 import org.junit.AfterClass;
@@ -8,13 +9,30 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import cucumber.api.CucumberOptions;
+import cucumber.api.SnippetType;
+import cucumber.api.junit.Cucumber;
+import org.junit.runner.RunWith;
 
 import java.time.Duration;
 import java.util.Random;
 
+import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**/
+
 @Slf4j
+@RunWith(Cucumber.class)
+@CucumberOptions(
+        features = "src/test/features/loginTest.feature",
+        glue = "mainPackage",
+        tags = "~@test"
+      //  dryRun = false,
+     //   strict = false,
+     //   snippets = SnippetType.UNDERSCORE
+//        name = "^Успешное|Успешная.*"*//*
+)
 public class MainTest {
 
     private final String login = "1test13@mpsdevelopment.com";
@@ -54,6 +72,7 @@ public class MainTest {
         CustomWebDriver.destroyDriver();
         log.info("Driver closed");
     }
+
     @Test
     //Login - OK, PW - OK
     public void testloginPositive() throws Exception {

@@ -1,11 +1,17 @@
 package mainPackage;
 
+import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
+
+import static com.codeborne.selenide.Selenide.open;
 
 public class LoginTest {
 
@@ -27,8 +33,54 @@ public class LoginTest {
         this.driver = driver;
     }
 
+    @Given("open logInpage (.*)")
+    public void openLoginPage(String arg){
+        open(arg);
+    }
 
-    public boolean loginTest(String login, String password, String mainUrl) throws Exception {
+    @When("type to input login text: (.*)")
+    public void fillInLogin(String arg){
+        WebElement webElementLogin = driver.findElement(By.id("login"));
+        webElementLogin.clear();
+        webElementLogin.sendKeys(arg);
+    }
+    @And("type to input with name password text:(.*)")
+    public void fillInPassword(String arg){
+        driver.findElement(By.id("password")).clear();
+        driver.findElement(By.id("password")).sendKeys(arg);
+        }
+    @And("press element with value Submit")
+    public void submit(){
+        driver.findElement(By.xpath(xpathForButtonSubmit)).click();
+    }
+    @Then("The element with tag Welcome should exist")
+    public boolean checkWelcomeExist() throws InterruptedException {
+        boolean flag=true;
+
+        try {
+            driver.findElement(By.xpath(xpathErrorPwWrong));
+            driver.findElement(By.xpath(xpathErrorLoginWrong));
+        } catch (Exception e){
+            flag=true;
+            System.out.println("Error" );
+        }
+        try {
+            driver.findElement(By.xpath(xpathForVerifyResult));
+            driver.findElement(By.xpath(xpathForLogout));
+        } catch (Exception e) {
+            flag = false;
+        }
+
+        if (flag) {
+            driver.findElement(By.xpath(xpathForLogout)).click();
+            Thread.sleep(500);
+            System.out.println("logout" );
+        }
+
+        return flag;
+    }
+
+    /*public boolean loginTest(String login, String password, String mainUrl) throws Exception {
 
         this.driver.get(mainUrl);
         WebElement webElement;
@@ -77,6 +129,6 @@ public class LoginTest {
         return flag;
 
 
-    }
+    }*/
 
 }
