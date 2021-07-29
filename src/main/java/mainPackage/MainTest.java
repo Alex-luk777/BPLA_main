@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.time.Duration;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,6 +26,13 @@ public class MainTest {
     private final String urlPrefix = "https://bpla.mpsdevelopment.com";
     private final String urlStart = (urlPrefix+"/start");
     private final String urlSignUp=(urlPrefix+"/sign-up");
+    private final String newLogin="li" + new Random().nextInt() + "@gmeil.com";
+    private final String name="New user";
+    private final String surname="surname";
+    private final String phone="0671231212";
+    private final String birthday="01.01.9";
+    private final String passwordSignUp="11111111";
+
     //private final String urlSignedUp="https://bpla.mpsdevelopment.com/sign-in";
 
 
@@ -142,8 +150,42 @@ public class MainTest {
         instance.get(urlStart);
         WebElement href = instance.findElement(By.id("signUp"));
         href.click();
-        assertTrue(new SignUp(instance).signUpOk());
+        assertTrue(new SignUp(instance).signUpOk(newLogin, name, surname, phone, birthday, password, password ));
     }
+
+    @Test
+    public void testSignUpNegative1() throws Exception {
+        //All mandatory fields are empty
+        instance.get(urlSignUp);
+        assertFalse(new SignUp(instance).signUpOk("", "", "", "", "", "", "" ));
+    }
+    @Test
+    public void testSignUpNegative2() throws Exception {
+        //Login is empty
+        instance.get(urlSignUp);
+        assertFalse(new SignUp(instance).signUpOk("", name, surname, phone, birthday, password, password ));
+    }
+    @Test
+    public void testSignUpNegative3() throws Exception {
+        //Name is empty
+        instance.get(urlSignUp);
+        assertFalse(new SignUp(instance).signUpOk(newLogin, "", surname, phone, birthday, password, password ));
+    }
+    @Test
+    public void testSignUpNegative4() throws Exception {
+        //Surame is empty
+        instance.get(urlSignUp);
+        assertFalse(new SignUp(instance).signUpOk(newLogin, name, "", phone, birthday, password, password ));
+    }
+    @Test
+    public void testSignUpNegative5() throws Exception {
+        //Phone is empty
+        instance.get(urlSignUp);
+        assertFalse(new SignUp(instance).signUpOk(newLogin, name, surname, "", birthday, password, password ));
+    }
+
+
+    //TODO signupNegative test
 
     @Test
     public void testSignUpSignIn() throws Exception {

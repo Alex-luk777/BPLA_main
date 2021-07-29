@@ -30,8 +30,9 @@ public class SignUp {
     private final String confirmpasswordFieldXpath = "/html/body/app-root/app-content-layout/div/div/div/div/div[2]/app-sign-up/div/div[1]/app-content-container/div/div/form/app-form-control[10]/div/div/input";
     private final String iagreeboxFieldXpath = "/html/body/app-root/app-content-layout/div/div/div/div/div[2]/app-sign-up/div/div[1]/app-content-container/div/div/form/app-form-control[11]/div/div/div[2]/label";
     private final String submitFieldXpath = "/html/body/app-root/app-content-layout/div/div/div/div/div[2]/app-sign-up/div/div[1]/app-content-container/div/div/form/button";
-    private final String newLogin="li" + new Random().nextInt() + "@gmeil.com";
+   // private final String newLogin="li" + new Random().nextInt() + "@gmeil.com";
     public final String pushNotificationDivId = "toast-container";
+    //todo need to check pushnotific text
 
     /* public final String tempMailUrl = "https://temp-mail.org/en/?__cf_chl_jschl_tk__=pmd_5e683695b38b33a9119627ea12d4357c10f97660-1626940660-0-gqNtZGzNAg2jcnBszQti";
     private WebDriver driverTempMail;
@@ -58,67 +59,37 @@ public class SignUp {
        this.driver = driver;
     }
 
-    public boolean signUpOk() {
+    public boolean signUpOk(String newLogin, String name, String surname, String phone, String birthDate, String password, String confirmpassword) {
         WebElement xpath = driver.findElement(By.xpath(loginFieldXpath));
         xpath.clear();
 
         System.out.println(newLogin);
         xpath.sendKeys(newLogin);
-        driver.findElement(By.xpath(nameFieldXpath)).sendKeys("New user");
-        driver.findElement(By.xpath(surnameFieldXpath)).sendKeys("surname");
-        driver.findElement(By.xpath(telFieldXpath)).sendKeys("0671231212");
+        driver.findElement(By.xpath(nameFieldXpath)).sendKeys(name);
+        driver.findElement(By.xpath(surnameFieldXpath)).sendKeys(surname);
+        driver.findElement(By.xpath(telFieldXpath)).sendKeys(phone);
         driver.findElement(By.xpath(birthdayFieldXpath)).clear();
-        driver.findElement(By.xpath(birthdayFieldXpath)).sendKeys("01" + "." + "01" + "." + "9");
-        driver.findElement(By.xpath(passwordFieldXpath)).sendKeys("11111111");
-        driver.findElement(By.xpath(confirmpasswordFieldXpath)).sendKeys("11111111");
+        driver.findElement(By.xpath(birthdayFieldXpath)).sendKeys(birthDate);
+        driver.findElement(By.xpath(passwordFieldXpath)).sendKeys(password);
+        driver.findElement(By.xpath(confirmpasswordFieldXpath)).sendKeys(confirmpassword);
         driver.findElement(By.xpath(iagreeboxFieldXpath)).click();
         driver.findElement(By.xpath(submitFieldXpath)).click();
 
-        boolean result = false;
-        WebElement element = (new WebDriverWait(driver, Duration.ofSeconds(1)))
-                .until(ExpectedConditions.presenceOfElementLocated(By.id(pushNotificationDivId)));
+        boolean result = true;
 
-        if (!element.isDisplayed()) {
+        try{ driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
+            WebElement element = driver.findElement(By.id(pushNotificationDivId));}
+        catch (Exception e){
             result = false;
-        } else {
-            result = true;
-            System.out.println("OK");
-
+            assertFalse(result);
+            return result;
         }
+
         assertTrue(result);
         return result;
     }
 
-    public boolean signUpNegativetest() {
-        WebElement xpath = driver.findElement(By.xpath(loginFieldXpath));
-        xpath.clear();
 
-        System.out.println(newLogin);
-        xpath.sendKeys(newLogin);
-        driver.findElement(By.xpath(nameFieldXpath)).sendKeys("New user");
-        driver.findElement(By.xpath(surnameFieldXpath)).sendKeys("surname");
-        driver.findElement(By.xpath(telFieldXpath)).sendKeys("0671231212");
-        driver.findElement(By.xpath(birthdayFieldXpath)).clear();
-        driver.findElement(By.xpath(birthdayFieldXpath)).sendKeys("01" + "." + "01" + "." + "9");
-        driver.findElement(By.xpath(passwordFieldXpath)).sendKeys("11111111");
-        driver.findElement(By.xpath(confirmpasswordFieldXpath)).sendKeys("11111111");
-        driver.findElement(By.xpath(iagreeboxFieldXpath)).click();
-        driver.findElement(By.xpath(submitFieldXpath)).click();
-
-        boolean result = false;
-        WebElement element = (new WebDriverWait(driver, Duration.ofSeconds(1)))
-                .until(ExpectedConditions.presenceOfElementLocated(By.id(pushNotificationDivId)));
-
-        if (!element.isDisplayed()) {
-            result = false;
-        } else {
-            result = true;
-            System.out.println("OK");
-
-        }
-        assertTrue(result);
-        return result;
-    }
 
 
 
